@@ -1,10 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
-import configureStore, { history } from '../../store/configureStore'
+import { initStore, history } from '../../store/store'
 import ViewportView from '../viewport/Viewport.container';
 
-const store = configureStore({})
+const store = initStore({});
 
 function App() {
   return (

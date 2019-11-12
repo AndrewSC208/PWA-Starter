@@ -1,14 +1,10 @@
-import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import CounterView from './Counter.view';
 
-import {
-    increment, 
-    decrement,
-    incrementAsync,
-    decrementAsync} from "../../store/counter"
+import * as actions from "../../store/counter"
+import * as navigation from "../../store/navigation";
 
 // bind state in the store to the home view
 const mapStateToProps = state => {
@@ -23,12 +19,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      incrementCounter: () => increment(),
-      decrementCounter: () => decrement(),
-      incrementCounterAsync: () => incrementAsync(),
-      decrementCounterAsync: () => decrementAsync(),
-      toSignup: () => push("/signup"),
-      toLogin: () => push("/login")
+      incrementCounter: (counter) => actions.incrementAsync(counter),
+      decrementCounter: (counter) => actions.decrementAsync(counter),
+      toSignup: () => navigation.toSignup(),
+      toLogin: () => navigation.toLogin(),
     },
     dispatch
   );

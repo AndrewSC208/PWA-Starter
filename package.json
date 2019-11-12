@@ -14,7 +14,8 @@
     "react-router-dom": "^5.0.0",
     "react-router-redux": "^4.0.8",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "prop-types": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
