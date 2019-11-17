@@ -1,21 +1,21 @@
-import React, {Component} from 'react';
+import React from 'react';
+
 import {Counter} from '../../common/counter';
 
-export default class CounterView extends Component {
+export const CounterView = ({counter, update, destroy}) => {
+  const {collection} = counter;
+  const renderCounterList = (collection) => {
+      return collection.map((c) => {
+          return <Counter
+              key={c.id}
+              counter={c}
+              update={update}
+              destroy={destroy}/>
+          }
+      )
+  };
 
-  renderCounterList = (collection) => 
-    collection.map((counter) => 
-      <Counter
-          counter={counter}
-          key={counter.id}
-          increment={this.props.incrementCounter}
-          decrement={this.props.decrementCounter} />
-      );
-
-  render() {
-      console.log(this.props);
-    return (
-      <div>{this.renderCounterList(this.props.counter.collection)}</div>
-    );
-  }
-}
+  return (
+      <div>{renderCounterList(collection)}</div>
+  )
+};

@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import CounterView from './Counter.view';
+import {CounterView} from './Counter.view';
 
 import * as actions from "../../store/counter"
 import * as navigation from "../../store/navigation";
@@ -17,12 +17,15 @@ const mapStateToProps = state => {
 
 // bind action methods to component view props
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      incrementCounter: (counter) => actions.incrementAsync(counter),
-      decrementCounter: (counter) => actions.decrementAsync(counter),
+  bindActionCreators({
+      // resource
+      create:  (counter) => actions.CreateCounter(counter),
+      read:    (query)   => actions.ReadCounter(query),
+      update:  (counter) => actions.UpdateCounter(counter),
+      destroy: (id)      => actions.DestroyCounter(id),
+      // global nav
       toSignup: () => navigation.toSignup(),
-      toLogin: () => navigation.toLogin(),
+      toLogin:  () => navigation.toLogin(),
     },
     dispatch
   );

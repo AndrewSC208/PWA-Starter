@@ -1,17 +1,12 @@
-///////////////
-// ACTION TYPES
-///////////////
-export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED';
-export const INCREMENT           = 'counter/INCREMENT';
-export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED';
-export const DECREMENT           = 'counter/DECREMENT';
-
-////////////////////////
-// INITIAL COUNTER STATE
-////////////////////////
-const initialState = {
-    isIncrementing: false,
-    isDecrementing: false, 
+////////////////
+// INITIAL STATE
+////////////////
+const initial = {
+    processingCount: 0,
+    isCreating: false,
+    isReading: false,
+    isUpdating: false,
+    isDeleting: false,
     collection: [
         { id: '45jk', name: 'Counter One', count: 45 },
         { id: '46jk', name: 'Times I forgot something', count: 100 },
@@ -20,85 +15,166 @@ const initialState = {
     ]
 };
 
-//////////////////
-// ACTION CREATORS
-//////////////////
-export const increment_request = payload => {
-    return {type: INCREMENT_REQUESTED, payload}
+//////////
+// ACTIONS
+//////////
+// CREATE
+export const CREATE_COUNTER         = "counter/CREATE";
+export const CREATE_COUNTER_SUCCESS = "counter/CREATE_SUCCESS";
+export const CREATE_COUNTER_ERROR   = "counter/CREATE_ERROR";
+
+export const create_counter_req = counter => ({
+    type: CREATE_COUNTER,
+    payload: counter
+});
+
+export const create_counter_suc = response => ({
+    type: CREATE_COUNTER_SUCCESS,
+    payload: response
+});
+
+export const create_counter_err = error => ({
+    type: CREATE_COUNTER_ERROR,
+    payload: error
+});
+
+export const CreateCounter = counter => dispatch => {
+    // update the store for a instant rerender
+    dispatch(create_counter_req(counter));
+
+    // make async call
+    return setTimeout((res = true) => {
+        if (res) {
+            // if successful
+            dispatch(create_counter_suc())
+        } else {
+            // if error
+            dispatch(create_counter_err())
+        }
+    }, 1500);
 };
 
-export const increment = () => {
-    return {type: INCREMENT}
+// READ
+export const READ_COUNTERS         = "counter/READ";
+export const READ_COUNTERS_SUCCESS = "counter/READ_SUCCESS";
+export const READ_COUNTERS_ERROR   = "counter/READ_ERROR";
+
+export const read_counter_req = query => ({
+    type: READ_COUNTERS,
+    payload: query
+});
+
+export const read_counter_suc = response => ({
+    type: READ_COUNTERS_SUCCESS,
+    payload: response
+});
+
+export const read_counter_err = error => ({
+    type: READ_COUNTERS_ERROR,
+    payload: error
+});
+
+export const ReadCounter = query => dispatch => {
+    // update the store for a instant rerender
+    dispatch(read_counter_req(query));
+
+    // make async call
+    return setTimeout((res = true) => {
+        if (res) {
+            // if successful
+            dispatch(read_counter_suc())
+        } else {
+            // if error
+            dispatch(read_counter_err())
+        }
+    }, 1500);
 };
 
-export const decrement = () => {
-    return {type: DECREMENT}
+// UPDATE
+export const UPDATE_COUNTER         = "counter/UPDATE";
+export const UPDATE_COUNTER_SUCCESS = "counter/UPDATE_SUCCESS";
+export const UPDATE_COUNTER_ERROR   = "counter/UPDATE_ERROR";
+
+export const update_counter_req = counter => ({
+    type: UPDATE_COUNTER,
+    payload: counter
+});
+
+export const update_counter_suc = response => ({
+    type: UPDATE_COUNTER_SUCCESS,
+    payload: response
+});
+
+export const update_counter_err = error => ({
+    type: UPDATE_COUNTER_ERROR,
+    payload: error
+});
+
+export const UpdateCounter = counter => dispatch => {
+    // update the store for a instant rerender
+    dispatch(update_counter_req(counter));
+
+    // make async call
+    return setTimeout((res = true) => {
+        if (res) {
+            // if successful
+            dispatch(update_counter_suc())
+        } else {
+            // if error
+            dispatch(update_counter_err())
+        }
+    }, 1500);
 };
 
-// incrementAsync adds one to the counter,
-// while simulating an async action
-export const incrementAsync = counter => {
-    console.log(counter);
+// DELETE
+export const DESTROY_COUNTER         = "counter/DESTROY";
+export const DESTROY_COUNTER_SUCCESS = "counter/DESTROY_SUCCESS";
+export const DESTROY_COUNTER_ERROR   = "counter/DESTROY_ERROR";
 
-    counter.count++;
+export const destroy_counter_req = counter => ({
+    type: DESTROY_COUNTER,
+    payload: counter
+});
 
-    increment_request(counter);
+export const destroy_counter_suc = response => ({
+    type: DESTROY_COUNTER_SUCCESS,
+    payload: response
+});
 
-    return dispatch => {
-        return setTimeout(() => {
-            dispatch({
-                type: INCREMENT
-            })
-        }, 3000);
-    }
+export const destroy_counter_err = error => ({
+    type: DESTROY_COUNTER_ERROR,
+    payload: error
+});
+
+export const DestroyCounter = counter => dispatch => {
+    // destroy the store for a instant rerender
+    dispatch(destroy_counter_req(counter));
+
+    // make async call
+    return setTimeout((res = true) => {
+        if (res) {
+            // if successful
+            dispatch(destroy_counter_suc())
+        } else {
+            // if error
+            dispatch(destroy_counter_err())
+        }
+    }, 1500);
 };
 
-// decrementAsync removes one from the counter,
-// while simulating an async action
-export const decrementAsync = () => {
-    // return dispatch => {
-    //     dispatch({
-    //         type: DECREMENT_REQUESTED
-    //     });
-    //
-    //     return setTimeout(() => {
-    //         dispatch({
-    //             type: DECREMENT
-    //         })
-    //     }, 3000)
-    // }
-};
+//////////
+// REDUCER
+//////////
+export default (state = initial, action) => {
+    const {type, payload} = action;
 
-//////////////////
-// COUNTER REDUCER
-//////////////////
-export default (state = initialState, action) => {
-    switch (action.type) {
-        case INCREMENT_REQUESTED:
+    switch (type) {
+        case CREATE_COUNTER:
+            debugger;
             return {
                 ...state,
-                count: {...action.payload},
-                isIncrementing: true
-            };
-
-        case INCREMENT:
-            return {
-                ...state,
-                count: state.count + 1,
-                isIncrementing: !state.isIncrementing
-            };
-
-        case DECREMENT_REQUESTED:
-            return {
-                ...state,
-                isDecrementing: true
-            };
-
-        case DECREMENT:
-            return {
-                ...state,
-                count: state.count - 1,
-                isDecrementing: !state.isDecrementing
+                count: {payload},
+                processingCount: state.processingCount++
             };
 
         default:
