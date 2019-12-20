@@ -1,20 +1,3 @@
-////////////////
-// INITIAL STATE
-////////////////
-const initial = {
-    processingCount: 0,
-    isCreating: false,
-    isReading: false,
-    isUpdating: false,
-    isDeleting: false,
-    collection: [
-        { id: '45jk', name: 'Counter One', count: 45 },
-        { id: '46jk', name: 'Times I forgot something', count: 100 },
-        { id: '47jk', name: 'Coffee cups consumed', count: 5000 },
-        { id: '48jk', name: 'Time I did not wake up', count: 37 }
-    ]
-};
-
 //////////
 // ACTIONS
 //////////
@@ -111,7 +94,7 @@ export const update_counter_err = error => ({
 });
 
 export const UpdateCounter = counter => dispatch => {
-    // update the store for a instant rerender
+    // update the store for a instant client-side rerender
     dispatch(update_counter_req(counter));
 
     // make async call
@@ -162,23 +145,62 @@ export const DestroyCounter = counter => dispatch => {
     }, 1500);
 };
 
+////////////////
+// INITIAL STATE
+////////////////
+let initial = {
+    processingCount: 0,
+    isCreating: false,
+    isReading: false,
+    isUpdating: false,
+    isDeleting: false,
+    error: "",
+    collection: {
+        "id1": {id: "id1", name: "Test 1", count: 1},
+        "id2": {id: "id2", name: "Test 2", count: 2},
+        "id3": {id: "id3", name: "Test 3", count: 3}
+    }
+};
+
 //////////
 // REDUCER
 //////////
-export default (state = initial, action) => {
+export const counters = (state = initial, action) => {
     const {type, payload} = action;
 
     switch (type) {
         case CREATE_COUNTER:
-            debugger;
             return {
                 ...state,
                 count: {payload},
                 processingCount: state.processingCount++
             };
 
+        case UPDATE_COUNTER:
+            return {
+                ...state,
+                isUpdating: true,
+                processingCount: state.processingCount + 1,
+                collection: {...state.collection}
+            };
+
+        case UPDATE_COUNTER_SUCCESS:
+            return {
+                ...state,
+                isUpdating: false,
+                processingCount: state.processingCount - 1,
+            };
+
+        case UPDATE_COUNTER_ERROR:
+            return {
+                ...state,
+                isUpdating: false,
+                processingCount: state.processingCount - 1,
+                error: payload
+            };
+
         default:
             return state
     }
-}
+};
 

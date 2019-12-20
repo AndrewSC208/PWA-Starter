@@ -6,7 +6,11 @@ import ViewportView from './Viewport.view';
 
 // bind state in the store to the home view
 const mapStateToProps = state => {
-    return {};
+    const {router} = state;
+
+    return {
+        router
+    };
 };
 
 // bind action methods to component view props

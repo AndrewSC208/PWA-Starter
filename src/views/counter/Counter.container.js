@@ -7,13 +7,7 @@ import * as actions from "../../store/counter"
 import * as navigation from "../../store/navigation";
 
 // bind state in the store to the home view
-const mapStateToProps = state => {
-    const {counter} = state;
-
-    return {
-        counter
-    }
-};
+const mapStateToProps = state => (counters) => counters;
 
 // bind action methods to component view props
 const mapDispatchToProps = dispatch =>

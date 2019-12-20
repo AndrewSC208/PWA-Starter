@@ -5,7 +5,7 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router'
 import thunk from 'redux-thunk';
 
-import counter from './counter';
+import {counters} from './counter';
 
 export function initStore(preloadedState) {
     // TODO -> add enhancers
@@ -26,7 +26,7 @@ export function initStore(preloadedState) {
 const createRootReducer = history =>
     combineReducers({
         router: connectRouter(history),
-        counter
+        counters
     });
 
 export const history = createBrowserHistory();

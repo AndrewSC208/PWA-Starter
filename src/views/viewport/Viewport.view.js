@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router'
+import { Switch, Route } from 'react-router';
 import {
     Alignment,
     Button,
@@ -7,40 +7,52 @@ import {
     Navbar,
     NavbarDivider,
     NavbarGroup,
-    NavbarHeading
+    NavbarHeading,
+    Menu,
+    MenuDivider,
+    MenuItem,
+    Position,
+    Popover
 } from "@blueprintjs/core";
-// Add all view
-// STORY 1 -> Dynamicly load all view with the router somehow
-// would be nice if we could just read all the views that are exported
-// from the views directory
-import HomeView from '../home'
+
+import HomeView from '../home/Home.container'
 import CounterView from '../counter/Counter.container'
 
 export default class ViewportView extends Component {
     render() {
+        const {toHome, toCounter} = this.props;
+
+        const renderMenu = (
+            <Menu>
+                <MenuItem icon="home" text="Home" onClick={toHome} />
+                <MenuItem icon="document" text="Counters" onClick={toCounter} />
+                <MenuItem icon="map" text="Map" />
+                <MenuItem icon="th" text="Table" shouldDismissPopover={false} />
+                <MenuItem icon="zoom-to-fit" text="Nucleus" disabled={true} />
+                <MenuDivider />
+                <MenuItem icon="cog" text="Settings...">
+                    <MenuItem icon="add" text="Add new application" />
+                    <MenuItem icon="remove" text="Remove application" />
+                </MenuItem>
+            </Menu>
+        );
+
         return (
             <div className="rootViewPort">
                 <Navbar className="navViewport">
                     <NavbarGroup align={Alignment.LEFT}>
                         <NavbarHeading>Plenum</NavbarHeading>
                         <NavbarDivider />
-                        <Button
-                            className={Classes.MINIMAL}
-                            icon="home"
-                            text="Home" 
-                            onClick={this.props.toHome} />
 
-                        <Button
-                            className={Classes.MINIMAL}
-                            icon="document"
-                            text="Counters" 
-                            onClick={this.props.toCounter} />
+                        <Popover content={renderMenu} position={Position.BOTTOM_LEFT}>
+                            <Button icon="menu" text="Menu" />
+                        </Popover>
                     </NavbarGroup>
 
                     <NavbarGroup align={Alignment.RIGHT}>
-                        <button className="bp3-button bp3-minimal bp3-icon-user"></button>
-                        <button className="bp3-button bp3-minimal bp3-icon-notifications"></button>
-                        <button className="bp3-button bp3-minimal bp3-icon-cog"></button>
+                        <Button className={Classes.MINIMAL} icon="user" />
+                        <Button className={Classes.MINIMAL} icon="notifications" />
+                        <Button className={Classes.MINIMAL} icon="cog" />
                     </NavbarGroup>
 
                 </Navbar>

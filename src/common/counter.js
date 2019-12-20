@@ -5,7 +5,23 @@ import { EditableText, H1, Button, Card, Elevation } from "@blueprintjs/core";
 import './counter.css'
 
 export const Counter = ({ counter, update, destroy}) => {
-    debugger;
+    const increment = () => {
+        counter.count++;
+        update(counter);
+    };
+
+    const decrement = () => {
+        counter.count--;
+        update(counter);
+    };
+
+    const title = (name) => {
+        if (name) {
+            counter.name = name;
+            update(counter);
+        }
+    };
+
     return (
         <Card interactive={true} elevation={Elevation.TWO} className="counter">
             <H1 className="center">
@@ -13,14 +29,15 @@ export const Counter = ({ counter, update, destroy}) => {
                     intent={"primary"}
                     maxLength={255}
                     placeholder={counter.name}
-                    selectAllOnFocus={true}/>
+                    selectAllOnFocus={true}
+                    onConfirm={title}/>
             </H1>
             <div className="counterActions">
                 <Button
                     icon="add"
                     intent="success"
                     className="counterButton"
-                    onClick={update()}/>
+                    onClick={increment}/>
 
                 <span className="counterValue">{counter.count}</span>
 
@@ -28,7 +45,7 @@ export const Counter = ({ counter, update, destroy}) => {
                     icon="remove"
                     intent="success"
                     className="counterButton"
-                    onClick={update()}/>
+                    onClick={decrement}/>
             </div>
         </Card>
     );
