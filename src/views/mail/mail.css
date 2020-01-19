@@ -1,0 +1,8 @@
+.root-mail > .bp3-tabs > .bp3-tab-list {
+    background: rgba(167, 182, 194, 0.3);
+    padding: 0 0 0 15px;
+}
+
+.root-mail > .bp3-tabs > .bp3-tab-list > div.bp3-tab:focus {
+    outline: none;
+}

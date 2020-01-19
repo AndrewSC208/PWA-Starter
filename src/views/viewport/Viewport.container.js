@@ -1,24 +1,22 @@
-import { push } from 'connected-react-router'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import ViewportView from './Viewport.view';
+import * as actions from "../../store/counter";
+import * as navigation from "../../store/navigation";
 
 // bind state in the store to the home view
-const mapStateToProps = state => {
-    const {router} = state;
-
-    return {
-        router
-    };
-};
+const mapStateToProps = state => (router) => router;
 
 // bind action methods to component view props
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            toHome: () => push("/"),
-            toCounter: () => push("/counter")
+            newCounter: (counter) => actions.CreateCounter(counter),
+            // navigation
+            toHome:    () => navigation.toHome(),
+            toCounter: () => navigation.toCounter(),
+            toMail:    () => navigation.toMail(),
         },
         dispatch
     );

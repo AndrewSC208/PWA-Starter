@@ -23,6 +23,8 @@ export const create_counter_err = error => ({
 
 export const CreateCounter = counter => dispatch => {
     // update the store for a instant rerender
+    console.log("COUNTER: ", counter);
+
     dispatch(create_counter_req(counter));
 
     // make async call
@@ -156,9 +158,9 @@ let initial = {
     isDeleting: false,
     error: "",
     collection: {
-        "id1": {id: "id1", name: "Test 1", count: 1},
-        "id2": {id: "id2", name: "Test 2", count: 2},
-        "id3": {id: "id3", name: "Test 3", count: 3}
+        "0ee07ca8-fdc7-457c-be82-49ec46f6f77d": {id: "0ee07ca8-fdc7-457c-be82-49ec46f6f77d", name: "Test 1", count: 1},
+        "649721c5-d88f-44af-bfb2-e25b788ee0c4": {id: "649721c5-d88f-44af-bfb2-e25b788ee0c4", name: "Test 2", count: 2},
+        "4a5e4d38-6d47-40a0-a7ba-fdfdaf8e9622": {id: "4a5e4d38-6d47-40a0-a7ba-fdfdaf8e9622", name: "Test 3", count: 3}
     }
 };
 
@@ -172,8 +174,11 @@ export const counters = (state = initial, action) => {
         case CREATE_COUNTER:
             return {
                 ...state,
-                count: {payload},
-                processingCount: state.processingCount++
+                processingCount: state.processingCount++,
+                collection: {
+                    ...state.collection,
+                    ...payload
+                }
             };
 
         case UPDATE_COUNTER:

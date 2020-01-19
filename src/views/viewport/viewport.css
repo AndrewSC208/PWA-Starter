@@ -1,4 +1,33 @@
+.root-viewport {
 
-.rootViewPort {
+}
 
+.main-viewport {
+
+}
+
+.root-navbar {
+
+}
+
+.top-navbar {
+
+}
+
+.root-navbar > .bp3-navbar.bottom-navbar {
+    height: 30px;
+    background: rgba(167, 182, 194, 0.3);
+}
+
+.root-navbar > .bp3-navbar.bottom-navbar > .bp3-navbar-group {
+    height: 30px;
+}
+
+.bottom-navbar > .bp3-navbar-group > .bp3-popover-wrapper > .bp3-popover-target >.bp3-button {
+    background: rgba(167, 182, 194, 0.3);
+    border-radius: 0;
+}
+
+.bottom-navbar > .bp3-navbar-group > .bp3-popover-wrapper > .bp3-popover-target >.bp3-button:focus {
+    outline-offset: -2px;
 }
